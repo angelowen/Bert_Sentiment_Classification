@@ -8,3 +8,4 @@ data/insult/
 data/threat/
 *.zip
 *.txt
+.gitignore
