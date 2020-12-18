@@ -8,4 +8,5 @@ data/insult/
 data/threat/
 *.zip
 *.txt
+Reference.txt
 .gitignore
