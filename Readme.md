@@ -9,8 +9,8 @@ Google對話AI團隊研究計劃，目前正在開發有助於改善在線對話
 
 
 ## 執行方式
-```python preprocess.py```
-```python pytorch_toxic.py```
+- ```python preprocess.py```
+- ```python pytorch_toxic.py```
 
 ### 資料前處理
 
