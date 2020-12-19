@@ -10,3 +10,5 @@ data/threat/
 *.txt
 Reference.txt
 .gitignore
+tmp.py
+src/*

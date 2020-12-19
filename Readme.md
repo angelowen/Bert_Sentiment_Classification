@@ -39,7 +39,7 @@ Google對話AI團隊研究計劃，目前正在開發有助於改善在線對話
 ---
 
 ## 解說
-此次專案使用hugging face/transformers 進行Bert model的fine-tune 以達到文本分類的功能，為了更快達到效果，採用`bert-base-uncased`做為pretrain-model，並將資料進行預處理後，轉換成tsv檔儲存，再丟入模型中訓練，最終輸出檔案`Result.csv`
+此次專案使用hugging face/transformers 進行Bert model的fine-tune 以達到文本分類的功能，主要利用BertForSequenceClassification 來完成任務，為了更快達到效果，採用`bert-base-uncased`做為pretrain-model，並將資料進行預處理後，轉換成tsv檔儲存，再丟入模型中訓練，最終輸出檔案`Result.csv`
 
 ## 待優化
 * 檔案整合

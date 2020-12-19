@@ -10,6 +10,8 @@ import time
 import datetime
 import torch
 from sklearn.metrics import matthews_corrcoef
+import os
+import torch.nn.functional as F
 
 CUDA_DEVICES = 1
 device = torch.device(f'cuda:{CUDA_DEVICES}' if torch.cuda.is_available() else 'cpu')
@@ -30,6 +32,7 @@ def format_time(elapsed):
     
     # 格式化为 hh:mm:ss
     return str(datetime.timedelta(seconds=elapsed_rounded))
+
 
 def train_test(exp,df_ans):
     
@@ -306,6 +309,9 @@ def train_test(exp,df_ans):
     df_stats = df_stats.set_index('epoch')
     print(df_stats)
 
+    if not os.path.isdir("src"):
+        os.mkdir("src")
+    torch.save(model.state_dict(), f'./src/model-{exp}.pth')
     ##########################
 
     # 加载数据集
@@ -343,8 +349,9 @@ def train_test(exp,df_ans):
     prediction_sampler = SequentialSampler(prediction_data)
     prediction_dataloader = DataLoader(prediction_data, sampler=prediction_sampler, batch_size=batch_size)
 
-    # 预测测试集
 
+
+    # 预测测试集
     print('Predicting labels for {:,} test sentences...'.format(len(input_ids)))
     # 依然是评估模式
     model.eval()
@@ -467,33 +474,40 @@ def train_test(exp,df_ans):
     ###############
     # 合并所有 batch 的预测结果
     flat_predictions = np.concatenate(predictions, axis=0)
-    flat_predictions = np.argmax(flat_predictions, axis=1).flatten()
+
+    x = torch.Tensor( flat_predictions)
+    y = F.softmax(x,dim =1) #对每一行进行softmax
+    # b = torch.argmax(y,dim=1)
+    pred = []
+    for idx,item in enumerate(y.numpy()):
+        pred.append(item[1])
+
+    # flat_predictions = np.argmax(flat_predictions, axis=1).flatten()
     # 合并所有的 序列id編號
     # flat_id = np.concatenate(sent_id, axis=0)
 
-    print(flat_predictions)
+    # print(pred)
     # output = np.vstack([flat_id,flat_predictions]).T
     # print(output)
     # df = pd.DataFrame(output, columns = ['id','ans'])
     # df.to_csv('Result.csv')
 
-    df_ans[exp] = flat_predictions
-    print(df_ans)
-    df_ans.to_csv(f'Result_{exp}.csv',index=None)
+    df_ans[exp] = pred
+
 
 
 
 if __name__ == '__main__':
     head = ['id','toxic','severe_toxic','obscene','threat','insult','identity_hate']
     # head = ['id','small']
-    df_test = pd.read_csv(f"./data/toxic/test.tsv", delimiter='\t', header=0, names=['id', 'sentence'])
+    df_test = pd.read_csv(f"./data/{head[1]}/test.tsv", delimiter='\t', header=0, names=['id', 'sentence'])
     test_id = df_test.id.values
     df_ans = pd.DataFrame(index=None, columns=head)
     df_ans['id'] = test_id
     for idx,exp in enumerate(head):
         if idx!=0:
             train_test(exp,df_ans)
-
-    df_ans.to_csv('Result.csv',index=None)
+    today = datetime.datetime.now().strftime("%m-%d")
+    df_ans.to_csv(f'Result_{today}.csv',index=None)
 
 
