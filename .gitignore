@@ -8,7 +8,8 @@ data/insult/
 data/threat/
 *.zip
 *.txt
-Reference.txt
 .gitignore
 tmp.py
 src/*
+doc/*
+output/*
