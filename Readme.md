@@ -98,7 +98,7 @@ Google對話AI團隊研究計劃，目前正在開發有助於改善在線對話
 * 輸出可為機率值或是分類結果
 * logistics_regression.py 使用了sklearn庫中的TfidfVectorizer來提取TF-IDF特徵，並利用Logistic Regression模型來進行分類
 ## 待優化
-* [文本處理](https://cloud.tencent.com/developer/article/1616750)
+> [文本處理](https://cloud.tencent.com/developer/article/1616750)
 * Data Augmentation
 * Training with Roberta
 
