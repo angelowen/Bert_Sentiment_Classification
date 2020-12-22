@@ -16,6 +16,7 @@ Google對話AI團隊研究計劃，目前正在開發有助於改善在線對話
 
 ## 執行方法2
 ```python preprocess.py```
+
 ```python main.py```
 
 ## 軟體需求
