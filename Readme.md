@@ -9,8 +9,9 @@ Google對話AI團隊研究計劃，目前正在開發有助於改善在線對話
 
 
 ## 執行方法1
-- ```python train.py```
-- ```python test.py```
+```python train.py```
+
+```python test.py```
 - **Attention!!** model parameters in test.py should be same as train.py e.g:max_length,num_class,model_name
 
 ## 執行方法2
